@@ -5,6 +5,11 @@ import os
 from django.db.models.signals import pre_delete
 from django.dispatch.dispatcher import receiver
 
+# Used for Google Cloud Storage
+from djangae import fields, storage
+
+public_storage = storage.CloudStorage(google_acl='public-read')
+
 def validate_file_extension(value):
 	import os
 	ext = os.path.splitext(value.name)[1]
@@ -51,7 +56,7 @@ class Location(models.Model):
 
 
 class MediaImage(models.Model):
-	image = models.ImageField(upload_to='image_uploads/', null=True, blank=True)
+	image = models.FileField(upload_to='image_uploads/', storage=public_storage, null=True, blank=True)
 	asset = models.ForeignKey(Asset, on_delete=models.CASCADE)
 
 	def thumbnail(self):
@@ -67,9 +72,10 @@ class MediaImage(models.Model):
 			pass  # when new photo then we do nothing, normal case
 		super(MediaImage, self).save(*args, **kwargs)
 
+
 class MediaVoiceMemo(models.Model):
 	asset = models.ForeignKey(Asset, on_delete=models.CASCADE)
-	voice_memo = models.FileField(upload_to='voice_uploads/', help_text="Valid Extensions: .aac, .wav, .mp4, .m4a", validators=[validate_file_extension], null=True, blank=True)
+	voice_memo = models.FileField(upload_to='voice_uploads/', storage=public_storage, help_text="Valid Extensions: .aac, .wav, .mp4, .m4a", validators=[validate_file_extension], null=True, blank=True)
 
 	def save(self, *args, **kwargs):
 		# delete old file when replacing by updating the file

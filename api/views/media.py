@@ -4,7 +4,6 @@ from api.models.asset import Asset, MediaImage, MediaVoiceMemo
 import sys
 from django.core.files.base import ContentFile
 
-
 class ImageUpload(ViewRequestDispatcher):
     def post(self, request, asset_id):
         asset = Asset.objects.get(id=asset_id)

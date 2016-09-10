@@ -1,6 +1,5 @@
 Django==1.9
 requests
 psycopg2
-Pillow
 django-geoposition
 GoogleAppEngineCloudStorageClient

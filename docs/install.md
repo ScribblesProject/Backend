@@ -8,6 +8,17 @@ The launcher should look something like this:
 
 ![Launcher Image](./appenginelauncher.png)
 
+# Updating/Add Python Libs
+
+To add/remove python libs, modify the `/requirements-vendor.txt` file.
+
+Then in terminal navigate to the folder with the requirements file and enter the following:
+```
+pip install -r requirements-vendor.txt -t ./lib
+```
+
+This will install the pip requirements to the lib folder. Be sure to add the new libs in the git repository.
+
 # Running Locally
 
 1. Click the run button on the project
