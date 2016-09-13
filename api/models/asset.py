@@ -75,7 +75,7 @@ class MediaImage(models.Model):
 
 class MediaVoiceMemo(models.Model):
 	asset = models.ForeignKey(Asset, on_delete=models.CASCADE)
-	voice_memo = models.FileField(upload_to='voice_uploads/', storage=public_storage, help_text="Valid Extensions: .aac, .wav, .mp4, .m4a", validators=[validate_file_extension], null=True, blank=True)
+	voice_memo = models.FileField(upload_to='voice_uploads/', storage=public_storage, help_text="Valid Extensions: .aac, .wav, .m4a, mp3", validators=[validate_file_extension], null=True, blank=True)
 
 	def save(self, *args, **kwargs):
 		# delete old file when replacing by updating the file

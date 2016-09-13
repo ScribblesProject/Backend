@@ -9,13 +9,15 @@ Base Url: tams-142602.appspot.com/
 For most up to date definitions, view comments in the source: https://github.com/ScribblesProject/Backend/blob/master/api/views/assets.py
 
 ## List
-Endpoint:       /api/asset/list/
-HTTP method:    GET
-HTTP headers:   `<none>`
-Query string:   `<none>`
-Request body:   `<none>`
+
+- Endpoint:       /api/asset/list/
+- HTTP method:    GET
+- HTTP headers:   `<none>`
+- Query string:   `<none>`
+- Request body:   `<none>`
+- Response:
+
 ```
-Response:
 {
     "assets": [{
         'id':              Integer
@@ -32,12 +34,14 @@ Response:
 ```
 
 ## Fetch
-Endpoint:       /api/asset/`<asset_id>`/
-HTTP method:    GET
-HTTP headers:   `<none>`
-Query string:   `<none>`
-Request body:   `<none>`
-Response:
+
+- Endpoint:       /api/asset/`<asset_id>`/
+- HTTP method:    GET
+- HTTP headers:   `<none>`
+- Query string:   `<none>`
+- Request body:   `<none>`
+- Response:
+
 ```
 {
     'id':              Integer
@@ -53,12 +57,13 @@ Response:
 ```
 
 ## Update
-Endpoint:       /api/asset/update/`<asset_id>`/
-HTTP method:    PUT
-HTTP headers:   `<none>`
-Query string:   `<none>`
-Request body: 
-**NOTE: all fields must be present**
+
+- Endpoint:       /api/asset/update/`<asset_id>`/
+- HTTP method:    PUT
+- HTTP headers:   `<none>`
+- Query string:   `<none>`
+- Request body: **NOTE: all fields must be present**
+
 ```
 {
     'name':                 String
@@ -70,7 +75,9 @@ Request body:
     'longitude':            Double
 }
 ```
-Response:
+
+- Response:
+
 ```
 {
     'success': Boolean
@@ -78,12 +85,14 @@ Response:
 ```
 
 ## Delete
-Endpoint:       /api/asset/delete/`<asset_id>`/
-HTTP method:    DELETE
-HTTP headers:   `<none>`
-Query string:   `<none>`
-Request body:   `<none>`
-Response:
+
+- Endpoint:       /api/asset/delete/`<asset_id>`/
+- HTTP method:    DELETE
+- HTTP headers:   `<none>`
+- Query string:   `<none>`
+- Request body:   `<none>`
+- Response:
+
 ```
 {
     'success': Boolean
@@ -91,12 +100,13 @@ Response:
 ```
 
 ## Create
-Endpoint:       /api/asset/create/
-HTTP method:    POST
-HTTP headers:   `<none>`
-Query string:   `<none>`
-Request body:
-**NOTE: all fields must be present**
+
+- Endpoint:       /api/asset/create/
+- HTTP method:    POST
+- HTTP headers:   `<none>`
+- Query string:   `<none>`
+- Request body: **NOTE: all fields must be present**
+
 ```
 {
     'name':                 String
@@ -108,7 +118,9 @@ Request body:
     'longitude':            Double
 }
 ```
-Response:
+
+- Response:
+
 ```
 {
     'id': Int
@@ -119,12 +131,14 @@ Response:
 ---
 
 # Asset-Category Management
-Endpoint:       /api/asset/category/list/
-HTTP method:    GET
-HTTP headers:   `<none>`
-Query string:   `<none>`
-Request body:   `<none>`
-Response:
+
+- Endpoint:       /api/asset/category/list/
+- HTTP method:    GET
+- HTTP headers:   `<none>`
+- Query string:   `<none>`
+- Request body:   `<none>`
+- Response:
+
 ```
 {
     "categories": [{
@@ -136,12 +150,14 @@ Response:
 ```
 
 # Asset-Type Management
-Endpoint:       /api/asset/type/list/
-HTTP method:    GET
-HTTP headers:   `<none>`
-Query string:   `<none>`
-Request body:   `<none>`
-Response:
+
+- Endpoint:       /api/asset/type/list/
+- HTTP method:    GET
+- HTTP headers:   `<none>`
+- Query string:   `<none>`
+- Request body:   `<none>`
+- Response:
+
 ```
 {
     "types": [{
@@ -151,6 +167,52 @@ Response:
 }
 ```
 
+---
+
 # Asset Media Management
-endpoint: api/asset/media/image-upload/(?P<asset_id>[0-9A-Fa-f]*)/
-endpoint: api/asset/media/voice-upload/(?P<asset_id>[0-9A-Fa-f]*)/
+
+## Create Image
+
+- Endpoint:       /api/asset/media/image-upload/`<asset_id>`/
+- HTTP method:    POST
+- HTTP headers:   
+
+```
+[
+    'content-type' : "image/jpeg"   # change this to a valid meme type 
+    'content-size' : 123456         # size of the data contained in body
+]
+```
+
+- Query string:   `<none>`
+- Request body:   `raw image data`
+- Response:
+
+```
+{
+    "status": true
+}
+```
+
+## Create Voice Memo
+
+- Endpoint:       /api/asset/media/voice-upload/`<asset_id>`/
+- HTTP method:    POST
+- HTTP headers:   
+
+```
+[
+    'content-type' : "audio/aac"    # change this to a valid meme type 
+    'content-size' : 123456         # size of the data contained in body
+]
+```
+
+- Query string:   `<none>`
+- Request body:   `raw voice data`
+- Response:
+
+```
+{
+    "status": true
+}
+```
