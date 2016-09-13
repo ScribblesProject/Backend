@@ -32,8 +32,7 @@ class Type(models.Model):
 
 	# How its displayed when printed
 	def __unicode__(self):
-		return '%s' % self.name
-    		
+		return '%s' % self.name		
 
 class Asset(models.Model):
 	name = models.CharField(max_length=255)
@@ -47,6 +46,7 @@ class Asset(models.Model):
 
 
 class Location(models.Model):
+	order = models.IntegerField()
 	position = GeopositionField()
 	asset = models.ForeignKey(Asset, on_delete=models.CASCADE)
 
@@ -60,7 +60,9 @@ class MediaImage(models.Model):
 	asset = models.ForeignKey(Asset, on_delete=models.CASCADE)
 
 	def thumbnail(self):
-		return '<img width="200" src="%s"/>' % self.image.url
+		return '<img width="100" src="%s"/>' % self.image.url
+
+	thumbnail.allow_tags = True
 
 	def save(self, *args, **kwargs):
 		# delete old file when replacing by updating the file

@@ -20,7 +20,7 @@ For most up to date definitions, view comments in the source: https://github.com
 ```
 {
     "assets": [{
-        'id':              Integer
+        'id':              Integer64 (e.g 5206187557519360)
         'name':            String
         'description':     String
         'category':        String
@@ -44,7 +44,7 @@ For most up to date definitions, view comments in the source: https://github.com
 
 ```
 {
-    'id':              Integer
+    'id':              Integer64 (e.g 5206187557519360)
     'name':            String
     'description':     String
     'category':        String
@@ -123,8 +123,8 @@ For most up to date definitions, view comments in the source: https://github.com
 
 ```
 {
-    'id': Int
-    'success': Boolean
+    'id':        Integer64 (e.g 5206187557519360)
+    'success':   Boolean
 }
 ```
 
@@ -142,7 +142,7 @@ For most up to date definitions, view comments in the source: https://github.com
 ```
 {
     "categories": [{
-        'id':              Integer
+        'id':              Integer64 (e.g 5206187557519360)
         'name':            String
         'description':     String
     }, ...]
@@ -161,7 +161,7 @@ For most up to date definitions, view comments in the source: https://github.com
 ```
 {
     "types": [{
-        'id':              Integer
+        'id':              Integer64 (e.g 5206187557519360)
         'name':            String
     }, ...]
 }

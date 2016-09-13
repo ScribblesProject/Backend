@@ -26,17 +26,19 @@ def assemble_asset_info(asset_obj):
         'category': asset_obj.category.name,
         'category-description': asset_obj.category.description,
         'asset-type': asset_obj.asset_type.name,
-        'latitude': 0.0,
-        'longitude': 0.0,
+        'locations':{},
         'media-image-url': "",
         'media-voice-url': "",
     }
 
     # Get asset location
     locations = Location.objects.filter(asset=asset_obj)
-    if len(locations) > 0:
-        result['latitude'] = float(locations[0].position.latitude)
-        result['longitude'] = float(locations[0].position.longitude)
+    for loc in locations:
+        newLocation = {}
+        newLocation['latitude'] = float(loc.position.latitude)
+        newLocation['longitude'] = float(loc.position.longitude)
+        orderStr = "%d" % (int(loc.order))
+        result['locations'][orderStr] = newLocation
 
     # Get asset media
     mediaImages = MediaImage.objects.filter(asset=asset_obj)
@@ -70,10 +72,16 @@ class AssetList(ViewRequestDispatcher):
                 'description':     String
                 'category':        String
                 'asset-type':      String
-                'latitude':        Double
-                'longitude':       Double
                 'media-image-url': String
                 'media-voice-url': String
+                'locations': { 
+                    '0': {
+                        'latitude':             Double
+                        'longitude':            Double
+                    }
+                    '1': ...
+                    '2': ...
+                }
             }, ...]
         }
         """
@@ -109,10 +117,16 @@ class AssetFetch(ViewRequestDispatcher):
             'description':     String
             'category':        String
             'asset-type':      String
-            'latitude':        Double
-            'longitude':       Double
             'media-image-url': String
             'media-voice-url': String
+            'locations': {
+                '0': {
+                    'latitude':             Double
+                    'longitude':            Double
+                }
+                '1': ...
+                '2': ...
+            }
         }
         """
         # Fetch asset object
@@ -165,8 +179,14 @@ class AssetUpdate(ViewRequestDispatcher):
             'category-name':        String  # If category doesnt exist, it will be created
             'category-description': String
             'type-name':            string  # If type doesnt exist, it will be created
-            'latitude':             Double
-            'longitude':            Double
+            'locations': {
+                '0': {
+                    'latitude':             Double
+                    'longitude':            Double
+                }
+                '1': ...
+                '2': ...
+            }
         }
 
         Response:
@@ -184,23 +204,30 @@ class AssetUpdate(ViewRequestDispatcher):
             categ = data['category']
             categ_description = data['categ_description']
             asset_t = data['asset-type']
-            latitude = data['latitude']
-            longitude = data['longitude']
+            locations = data['locations']
+
+            # verify location array inputs
+            for order, loc in locations:
+                latitude = loc['latitude']
+                longitude = loc['longitude']       
         except KeyError:
             raise InvalidFieldException('Body not formatted correctly')
 
         asset_obj.name = name
         asset_obj.description = description
 
-        # Update Position
-        try:
-            asset_location = Location.objects.get(asset=asset_obj)
-            asset_location.position.longitude = longitude
-            asset_location.position.latitude = latitude
-            asset_location.save()
-        except Location.DoesNotExist:
-            new_location = Location.objects.create(position=Geoposition(latitude, longitude), asset=asset_obj)
-            new_location.save()
+        # Update Positions
+        for order, loc in locations:
+            latitude = loc['latitude']
+            longitude = loc['longitude']
+            try:
+                asset_location = Location.objects.get(order=int(order), asset=asset_obj)
+                asset_location.position.longitude = longitude
+                asset_location.position.latitude = latitude
+                asset_location.save()
+            except Location.DoesNotExist:
+                new_location = Location.objects.create(order=int(order), position=Geoposition(latitude, longitude), asset=asset_obj)
+                new_location.save()
 
         # Update Category
         if asset_obj.category.name == categ:
@@ -252,8 +279,14 @@ class AssetCreate(ViewRequestDispatcher):
             'category':             String  # If category doesnt exist, it will be created
             'category-description': String
             'type-name':            string  # If type doesnt exist, it will be created
-            'latitude':             Double
-            'longitude':            Double
+            'locations': {
+                '0': {
+                    'latitude':             Double
+                    'longitude':            Double
+                }
+                '1': ...
+                '2': ...
+            }
         }
 
         Response:
@@ -270,8 +303,12 @@ class AssetCreate(ViewRequestDispatcher):
             categ = data['category']
             categ_description = data['category-description']
             asset_t = data['type-name']
-            latitude = data['latitude']
-            longitude = data['longitude']
+            locations = data['locations']
+
+            # verify location array inputs
+            for order, loc in locations:
+                latitude = loc['latitude']
+                longitude = loc['longitude']
         except KeyError:
             raise InvalidFieldException('Body not formatted correctly')
 
@@ -302,8 +339,16 @@ class AssetCreate(ViewRequestDispatcher):
         new_asset.save()
         result['id'] = new_asset.id
 
-        # Add Possition
-        new_location = Location.objects.create(position=Geoposition(latitude, longitude), asset=new_asset)
-        new_location.save()
+        # Add locations
+        for order, loc in locations:
+            latitude = loc['latitude']
+            longitude = loc['longitude']
+
+            new_location = Location.objects.create(order=int(order),position=Geoposition(latitude, longitude), asset=new_asset)
+            new_location.save()
 
         return HttpResponse(self.json_dump(request, result), content_type="application/json")
+
+
+
+
