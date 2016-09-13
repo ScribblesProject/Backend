@@ -49,14 +49,14 @@ For most up to date definitions, view comments in the source: https://github.com
 
 ```
 {
-    'id':              Integer64 (e.g 5206187557519360)
-    'name':            String
-    'description':     String
-    'category':        String
-    'asset-type':      String
-    'media-image-url': String
-    'media-voice-url': String
-    'locations': {
+    'id':                  Integer64 (e.g 5206187557519360)
+    'name':                String
+    'description':         String
+    'category':            String
+    'asset-type':          String
+    'media-image-url':     String
+    'media-voice-url':     String
+    'locations': {         # Key is the order of the locations
         '0': {
             'latitude':             Double
             'longitude':            Double
@@ -81,8 +81,8 @@ For most up to date definitions, view comments in the source: https://github.com
     'category-name':        String  # If category doesnt exist, it will be created
     'category-description': String
     'type-name':            string  # If type doesnt exist, it will be created
-    'locations': {
-        '0': {
+    'locations': {          # Key is the order of the locations
+        '0': {                      
             'latitude':             Double
             'longitude':            Double
         }
@@ -129,7 +129,7 @@ For most up to date definitions, view comments in the source: https://github.com
     'category':             String  # If category doesnt exist, it will be created
     'category-description': String
     'type-name':            string  # If type doesnt exist, it will be created
-    'locations': {
+    'locations': {          # Key is the order of the locations.
         '0': {
             'latitude':             Double
             'longitude':            Double
@@ -200,7 +200,7 @@ For most up to date definitions, view comments in the source: https://github.com
 ```
 [
     'content-type' : "image/jpeg"   # change this to a valid meme type 
-    'content-size' : 123456         # size of the data contained in body
+    'content-size' : 123456         # size of the data contained in request body
 ]
 ```
 
@@ -223,7 +223,7 @@ For most up to date definitions, view comments in the source: https://github.com
 ```
 [
     'content-type' : "audio/aac"    # change this to a valid meme type 
-    'content-size' : 123456         # size of the data contained in body
+    'content-size' : 123456         # size of the data contained in request body
 ]
 ```
 
