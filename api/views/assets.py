@@ -207,9 +207,9 @@ class AssetUpdate(ViewRequestDispatcher):
             locations = data['locations']
 
             # verify location array inputs
-            for order, loc in locations:
-                latitude = loc['latitude']
-                longitude = loc['longitude']       
+            for order in locations.keys():
+                latitude = locations[order]['latitude']
+                longitude = locations[order]['longitude']      
         except KeyError:
             raise InvalidFieldException('Body not formatted correctly')
 
@@ -217,9 +217,9 @@ class AssetUpdate(ViewRequestDispatcher):
         asset_obj.description = description
 
         # Update Positions
-        for order, loc in locations:
-            latitude = loc['latitude']
-            longitude = loc['longitude']
+        for order in locations.keys():
+            latitude = locations[order]['latitude']
+            longitude = locations[order]['longitude'] 
             try:
                 asset_location = Location.objects.get(order=int(order), asset=asset_obj)
                 asset_location.position.longitude = longitude
