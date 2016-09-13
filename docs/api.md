@@ -25,10 +25,15 @@ For most up to date definitions, view comments in the source: https://github.com
         'description':     String
         'category':        String
         'asset-type':      String
-        'latitude':        Double
-        'longitude':       Double
         'media-image-url': String
         'media-voice-url': String
+        'locations': {
+            '0': {
+                'latitude':             Double
+                'longitude':            Double
+            }
+            '1': ...
+        }
     }, ...]
 }
 ```
@@ -49,10 +54,15 @@ For most up to date definitions, view comments in the source: https://github.com
     'description':     String
     'category':        String
     'asset-type':      String
-    'latitude':        Double
-    'longitude':       Double
     'media-image-url': String
     'media-voice-url': String
+    'locations': {
+        '0': {
+            'latitude':             Double
+            'longitude':            Double
+        }
+        '1': ...
+    }
 }
 ```
 
@@ -71,8 +81,13 @@ For most up to date definitions, view comments in the source: https://github.com
     'category-name':        String  # If category doesnt exist, it will be created
     'category-description': String
     'type-name':            string  # If type doesnt exist, it will be created
-    'latitude':             Double
-    'longitude':            Double
+    'locations': {
+        '0': {
+            'latitude':             Double
+            'longitude':            Double
+        }
+        '1': ...
+    }
 }
 ```
 
@@ -114,8 +129,13 @@ For most up to date definitions, view comments in the source: https://github.com
     'category':             String  # If category doesnt exist, it will be created
     'category-description': String
     'type-name':            string  # If type doesnt exist, it will be created
-    'latitude':             Double
-    'longitude':            Double
+    'locations': {
+        '0': {
+            'latitude':             Double
+            'longitude':            Double
+        }
+        '1': ...
+    }
 }
 ```
 
