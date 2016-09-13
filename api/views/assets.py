@@ -299,18 +299,25 @@ class AssetCreate(ViewRequestDispatcher):
         try:
             data = json.loads(request.body)
             name = data['name']
-            description = data['description']
             categ = data['category']
             categ_description = data['category-description']
             asset_t = data['type-name']
             locations = data['locations']
 
+            print('FOUND LOCATION!!!!!! ', locations)
+
             # verify location array inputs
-            for order, loc in locations:
-                latitude = loc['latitude']
-                longitude = loc['longitude']
+            for order in locations.keys():
+                latitude = locations[order]['latitude']
+                longitude = locations[order]['longitude']
+
         except KeyError:
             raise InvalidFieldException('Body not formatted correctly')
+
+        description = data.get('description')
+        if description == None:
+            description = ""
+
 
         result = {'success': True}
 
@@ -340,9 +347,9 @@ class AssetCreate(ViewRequestDispatcher):
         result['id'] = new_asset.id
 
         # Add locations
-        for order, loc in locations:
-            latitude = loc['latitude']
-            longitude = loc['longitude']
+        for order in locations.keys():
+            latitude = locations[order]['latitude']
+            longitude = locations[order]['longitude']
 
             new_location = Location.objects.create(order=int(order),position=Geoposition(latitude, longitude), asset=new_asset)
             new_location.save()
