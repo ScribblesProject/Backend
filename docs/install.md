@@ -27,6 +27,12 @@ This will install the pip requirements to the lib folder. Be sure to add the new
 
 Check out the logs for any issues
 
+## Using Terminal
+
+You will need to follow a different instruction guide. Please use the following tutorial:
+
+https://cloud.google.com/appengine/docs/python/cloud-sql/django
+
 # Deploying
 
 NOTE: You must have permission to deploy by the Google account administrator.
