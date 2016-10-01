@@ -241,7 +241,7 @@ class AssetUpdate(ViewRequestDispatcher):
                 asset_obj.category = new_categ
             except Category.DoesNotExist:
                 # If D.N.E, create and replace
-                new_categ = Category.objects.get(name=categ, description=categ_description)
+                new_categ = Category.objects.create(name=categ, description=categ_description)
                 new_categ.save()
                 asset_obj.category = new_categ
 
@@ -249,12 +249,12 @@ class AssetUpdate(ViewRequestDispatcher):
         if not asset_obj.asset_type.name == asset_t:
             try:
                 # If exists, update and replace
-                new_type = Type.objects.get(name=asset_t)
+                new_type = Type.objects.get(name=asset_t, category=asset_obj.category)
                 new_type.save()
                 asset_obj.asset_type = new_type
             except Type.DoesNotExist:
                 # If D.N.E, create and replace
-                new_type = Type.objects.get(name=asset_t)
+                new_type = Type.objects.create(name=asset_t, category=asset_obj.category)
                 new_type.save()
                 asset_obj.asset_type = new_type
 
@@ -335,11 +335,11 @@ class AssetCreate(ViewRequestDispatcher):
         # AssetType
         try:
             # If exists, update and replace
-            new_type = Type.objects.get(name=asset_t)
+            new_type = Type.objects.get(name=asset_t, category=new_categ)
             new_type.save()
         except Type.DoesNotExist:
             # If D.N.E, create and replace
-            new_type = Type.objects.create(name=asset_t)
+            new_type = Type.objects.create(name=asset_t, category=new_categ)
             new_type.save()
 
         new_asset = Asset.objects.create(name=name, description=description, category=new_categ, asset_type=new_type)

@@ -2,7 +2,7 @@ from django.conf.urls import include, url
 from views.status import Status as ServiceStatus
 from views.initialization import InitSystem
 from views.assets import AssetList, AssetFetch, AssetUpdate, AssetDelete, AssetCreate
-from views.type import TypeList
+from views.type import TypeList, NestedTypeList
 from views.category import CategoryList
 from views.media import ImageUpload, VoiceUpload
 
@@ -24,8 +24,7 @@ urlpatterns = [
 
 	# Asset-Type Management
 	url(r'^asset/type/list/$', TypeList.as_view(), name="type-list"),
-	# url(r'^asset/type/delete/(?P<type_id>[0-9A-Fa-f]*)/$', ServiceStatus.as_view(), name="type-delete"),	
-	# url(r'^asset/type/update/(?P<type_id>[0-9A-Fa-f]*)/$', ServiceStatus.as_view(), name="type-update"),	
+	url(r'^asset/type/list/(?P<category_id>[0-9A-Fa-f]*)/$', NestedTypeList.as_view(), name="type-list-nested"),
 
 	# Asset Media Management
 	url(r'^asset/media/image-upload/(?P<asset_id>[0-9A-Fa-f]*)/$', ImageUpload.as_view(), name="media-image-upload"),

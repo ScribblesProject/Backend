@@ -56,6 +56,11 @@ indexes:
   - name: __key__
     direction: desc
 
+- kind: api_category
+  properties:
+  - name: __key__
+    direction: desc
+
 - kind: api_client
   properties:
   - name: __key__
@@ -123,6 +128,11 @@ indexes:
   - name: client_id
   - name: user_id
   - name: refreshed
+    direction: desc
+
+- kind: api_type
+  properties:
+  - name: __key__
     direction: desc
 
 - kind: auth_group

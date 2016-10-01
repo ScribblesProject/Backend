@@ -171,6 +171,8 @@ For most up to date definitions, view comments in the source: https://github.com
 
 # Asset-Type Management
 
+## List All Types
+
 - Endpoint:       /api/asset/type/list/
 - HTTP method:    GET
 - HTTP headers:   `<none>`
@@ -181,11 +183,35 @@ For most up to date definitions, view comments in the source: https://github.com
 ```
 {
     "types": [{
-        'id':              Integer64 (e.g 5206187557519360)
+        'id':              Integer
         'name':            String
+        'category-id':     Integer
+        'category-name':   String
     }, ...]
 }
 ```
+
+
+## List Nested Types
+
+- Endpoint:       /api/asset/type/list/<category-id>/
+- HTTP method:    GET
+- HTTP headers:   `<none>`
+- Query string:   `<none>`
+- Request body:   `<none>`
+- Response:
+
+```
+{
+    "types": [{
+        'id':              Integer
+        'name':            String
+        'category-id':     Integer
+        'category-name':   String
+    }, ...]
+}
+```
+
 
 ---
 

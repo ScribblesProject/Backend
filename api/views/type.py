@@ -20,6 +20,8 @@ class TypeList(ViewRequestDispatcher):
             "types": [{
                 'id':              Integer
                 'name':            String
+                'category-id':     Integer
+                'category-name':   String
             }, ...]
         }
         """
@@ -36,6 +38,55 @@ class TypeList(ViewRequestDispatcher):
             asset = {
             	'id': obj.id,
             	'name': obj.name,
+                'category-id': obj.category.id,
+                'category-name': obj.category.name,
+            }
+
+            result['types'].append(asset)
+
+        return HttpResponse(self.json_dump(request, result), content_type="application/json")
+
+class NestedTypeList(ViewRequestDispatcher):
+    def get(self, request, category_id):
+        """ List of Asset-Type.
+
+        Endpoint:       /api/asset/type/list/<category_id>/
+        HTTP method:    GET
+        HTTP headers:   <none>
+        Query string:   <none>
+        Request body:   <none>
+
+        Response:
+        {
+            "types": [{
+                'id':              Integer
+                'name':            String
+                'category-id':     Integer
+                'category-name':   String
+            }, ...]
+        }
+        """
+
+        result = {
+            'types': [],
+        }
+
+        try:
+            category = Category.objects.get(id=category_id)
+        except Category.DoesNotExist:
+            return HttpResponse(self.json_dump(request, result), content_type="application/json")
+
+        # Get assets from database
+        objects = Type.objects.filter(category=category)
+
+        # Parse assets into result
+        for obj in objects:
+            # Compile info and append
+            asset = {
+                'id': obj.id,
+                'name': obj.name,
+                'category-id': obj.category.id,
+                'category-name': obj.category.name,
             }
 
             result['types'].append(asset)
