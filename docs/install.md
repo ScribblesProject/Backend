@@ -6,7 +6,7 @@
 
 The launcher should look something like this:
 
-![Launcher Image](./appenginelauncher.png)
+![Launcher Image](./images/appenginelauncher.png)
 
 # Updating/Add Python Libs
 

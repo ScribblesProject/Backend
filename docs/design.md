@@ -28,7 +28,7 @@ All errors are generated from the classes in `/common/error.py`. Simply initiali
 
 > NOTE: Since the project uses Google App Engine's NoSQL database, there is no need to `makemigrations` and `migrate`. These commands initialize a regular SQL database with the relationships and manages any migrations from model versions.
 
-I have built an ERD diagram to illustrate the relationships between models. [View The Entity Relationship Diagram (ERD)](./ERD.pdf)
+I have built an ERD diagram to illustrate the relationships between models. [View The Entity Relationship Diagram (ERD)](./pdfs/ERD.pdf)
 
 ## User Model
 
