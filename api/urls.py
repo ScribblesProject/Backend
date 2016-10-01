@@ -19,8 +19,8 @@ urlpatterns = [
 
 	# Asset-Category Management
 	url(r'^asset/category/list/$', CategoryList.as_view(), name="categ-list"),
-	# url(r'^asset/category/delete/(?P<categ_id>[0-9A-Fa-f]*)/$', ServiceStatus.as_view(), name="categ-delete"),	
-	# url(r'^asset/category/update/(?P<categ_id>[0-9A-Fa-f]*)/$', ServiceStatus.as_view(), name="categ-update"),	
+	# url(r'^asset/category/delete/(?P<categ_id>[0-9A-Fa-f]*)/$', ServiceStatus.as_view(), name="categ-delete"),
+	# url(r'^asset/category/update/(?P<categ_id>[0-9A-Fa-f]*)/$', ServiceStatus.as_view(), name="categ-update"),
 
 	# Asset-Type Management
 	url(r'^asset/type/list/$', TypeList.as_view(), name="type-list"),
@@ -29,4 +29,4 @@ urlpatterns = [
 	# Asset Media Management
 	url(r'^asset/media/image-upload/(?P<asset_id>[0-9A-Fa-f]*)/$', ImageUpload.as_view(), name="media-image-upload"),
 	url(r'^asset/media/voice-upload/(?P<asset_id>[0-9A-Fa-f]*)/$', VoiceUpload.as_view(), name="media-voice-upload"),
-]
+] 

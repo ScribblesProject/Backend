@@ -41,3 +41,19 @@ NOTE: You must have permission to deploy by the Google account administrator.
 2. Click deploy
 
 Check out the logs for any issues
+
+# Collect Static
+
+Many Django websites use static files that are specific to individual applications. It is usually important to `collectstatic` to collect them all into a visible static directory. This way people can actually see the images when they are deployed.
+
+In order to `collectstatic`, you will need to install all of the python requirements locally on your machine. The requirements for the application can be found in `requirements-vendor.txt`. You will also need to install the App Engine SDK. A quick not about that:
+
+> NOTE: [source](https://cloud.google.com/appengine/docs/python/cloud-sql/django) Before running the following `manage.py` commands, you'll need to ensure that all of the necessary libraries are available for import by adding them to your `PYTHONPATH`. For example, if you downloaded the App Engine SDK to your home directory in `/home/user/google_appengine`, the following command could be used to ensure that the django and google packages would be found when running `manage.py`
+
+PIP should automatically add the installed libraries to your `PYTHONPATH`.
+
+To `collectstatic`, run the following command in terminal:
+
+```
+python manage.py collectstatic
+```

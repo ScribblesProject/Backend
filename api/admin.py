@@ -1,14 +1,11 @@
 from django.contrib import admin
 from django.db import models
 from models.asset import Asset, Category, MediaImage, MediaVoiceMemo, Type, Location
-
 from common.simpleflake import simpleflake
 from django import forms
-# from django.contrib import admin
 from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
-
 from models.user import MyUser
 
 
@@ -98,6 +95,7 @@ class MediaImageInline(admin.StackedInline):
     model = MediaImage
     extra = 0
 
+
 class MediaVoiceMemoInline(admin.StackedInline):
     fieldsets = (
         (
@@ -110,10 +108,12 @@ class MediaVoiceMemoInline(admin.StackedInline):
     model = MediaVoiceMemo
     extra = 0
 
+
 class LocationInline(admin.StackedInline):
     model = Location
     extra = 1
     max_num = 1
+
 
 class AssetAdmin(admin.ModelAdmin):
     list_display = ('name', 'category', 'asset_type',)
@@ -124,9 +124,6 @@ class AssetAdmin(admin.ModelAdmin):
 
 
 admin.site.register(MyUser, MyUserAdmin)
-
 admin.site.register(Asset, AssetAdmin)
-# admin.site.register(Media)
 admin.site.register(Category)
 admin.site.register(Type)
-# admin.site.register(Location)
