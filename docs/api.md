@@ -24,6 +24,8 @@ For most up to date definitions, view comments in the source: https://github.com
         'name':            String
         'description':     String
         'category':        String
+        'category-id':     String
+        'category-description': String
         'asset-type':      String
         'media-image-url': String
         'media-voice-url': String
@@ -53,6 +55,8 @@ For most up to date definitions, view comments in the source: https://github.com
     'name':                String
     'description':         String
     'category':            String
+    'category-id':     String
+    'category-description': String
     'asset-type':          String
     'media-image-url':     String
     'media-voice-url':     String
@@ -225,7 +229,7 @@ For most up to date definitions, view comments in the source: https://github.com
 
 ```
 [
-    'content-type' : "image/jpeg"   # change this to a valid meme type 
+    'content-type' : "image/jpeg"   # change this to a valid meme type
     'content-size' : 123456         # size of the data contained in request body
 ]
 ```
@@ -248,7 +252,7 @@ For most up to date definitions, view comments in the source: https://github.com
 
 ```
 [
-    'content-type' : "audio/aac"    # change this to a valid meme type 
+    'content-type' : "audio/aac"    # change this to a valid meme type
     'content-size' : 123456         # size of the data contained in request body
 ]
 ```

@@ -6,7 +6,7 @@ from geoposition import Geoposition
 from api.common.errors import InvalidFieldException
 
 """
-NOTES: 
+NOTES:
 
 ViewRequestDispatcher - what all requests inherit from
   It catches all exceptions, formulates an error as defined in common/errors.py
@@ -24,6 +24,7 @@ def assemble_asset_info(asset_obj):
         'name': asset_obj.name,
         'description': asset_obj.description,
         'category': asset_obj.category.name,
+        'category-id': asset_obj.category.id,
         'category-description': asset_obj.category.description,
         'asset-type': asset_obj.asset_type.name,
         'locations':{},
@@ -71,10 +72,12 @@ class AssetList(ViewRequestDispatcher):
                 'name':            String
                 'description':     String
                 'category':        String
+                'category-id':     String
+                'category-description': String
                 'asset-type':      String
                 'media-image-url': String
                 'media-voice-url': String
-                'locations': { 
+                'locations': {
                     '0': {
                         'latitude':             Double
                         'longitude':            Double
@@ -116,6 +119,8 @@ class AssetFetch(ViewRequestDispatcher):
             'name':            String
             'description':     String
             'category':        String
+            'category-id':     String
+            'category-description': String
             'asset-type':      String
             'media-image-url': String
             'media-voice-url': String
@@ -158,7 +163,7 @@ class AssetDelete(ViewRequestDispatcher):
         try:
             Asset.objects.get(id=asset_id).delete()
         except:
-            result['success'] = False            
+            result['success'] = False
 
         return HttpResponse(self.json_dump(request, result), content_type="application/json")
 
@@ -209,7 +214,7 @@ class AssetUpdate(ViewRequestDispatcher):
             # verify location array inputs
             for order in locations.keys():
                 latitude = locations[order]['latitude']
-                longitude = locations[order]['longitude']      
+                longitude = locations[order]['longitude']
         except KeyError:
             raise InvalidFieldException('Body not formatted correctly')
 
@@ -219,7 +224,7 @@ class AssetUpdate(ViewRequestDispatcher):
         # Update Positions
         for order in locations.keys():
             latitude = locations[order]['latitude']
-            longitude = locations[order]['longitude'] 
+            longitude = locations[order]['longitude']
             try:
                 asset_location = Location.objects.get(order=int(order), asset=asset_obj)
                 asset_location.position.longitude = longitude
@@ -355,7 +360,3 @@ class AssetCreate(ViewRequestDispatcher):
             new_location.save()
 
         return HttpResponse(self.json_dump(request, result), content_type="application/json")
-
-
-
-
