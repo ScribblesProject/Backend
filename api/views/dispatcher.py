@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from django.views.generic import View
 from django.utils.decorators import method_decorator
 from api.common.errors import ApplicationException, GeneralException
+from django.conf import settings
 
 
 class ViewRequestDispatcher(View):
@@ -19,10 +20,15 @@ class ViewRequestDispatcher(View):
         except ApplicationException as ae:
             return self.handle_exception(ae, request)
 
-        # except Exception as e:
-        #    return self.handle_exception(GeneralException(e), request)
+        except Exception as e:
+            if settings.DEBUG:
+                raise e
+            else:
+               return self.handle_exception(GeneralException(e), request)
 
     def handle_exception(self, e, request):
+
+        print "EXCEPTION OCCURRED!"
 
         result = {
             'code': e.code,
