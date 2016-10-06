@@ -5,6 +5,7 @@ import sys
 from django.core.files.base import ContentFile
 from django.core.files.uploadedfile import SimpleUploadedFile
 from api.common.errors import InvalidRequestException
+import time
 
 class ImageUpload(ViewRequestDispatcher):
     def content_type_extention(self, content_type):
@@ -39,7 +40,8 @@ class ImageUpload(ViewRequestDispatcher):
             raise InvalidRequestException('content-type invalid')
 
         # create temp file
-        filename = "image.%s" % (extension)
+        timestamp = int(time.time())
+        filename = "image-%d.%s" % (timestamp, extension)
         upload_file = SimpleUploadedFile(filename, request.body, content_type=content_type)
 
         # attach to model & save
@@ -56,11 +58,11 @@ class ImageUpload(ViewRequestDispatcher):
             response_data['description'] = repr(error)
         except:
             response_data['status'] = "failed"
-        
+
         return HttpResponse(self.json_dump(request, response_data), content_type="application/json")
 
 
-class VoiceUpload(ViewRequestDispatcher): 
+class VoiceUpload(ViewRequestDispatcher):
     def content_type_extention(self, content_type):
         if content_type == "audio/aac":
             return "aac"
@@ -91,7 +93,8 @@ class VoiceUpload(ViewRequestDispatcher):
             raise InvalidRequestException('content-type invalid')
 
         # create temp file
-        filename = "voice.%s" % (extension)
+        timestamp = int(time.time())
+        filename = "voice-%d.%s" % (timestamp, extension)
         upload_file = SimpleUploadedFile(filename, request.body, content_type=content_type)
 
         # attach to model & save
@@ -105,5 +108,5 @@ class VoiceUpload(ViewRequestDispatcher):
             current_media.save()
         except:
             response_data['status'] = "failed"
-        
+
         return HttpResponse(self.json_dump(request, response_data), content_type="application/json")
