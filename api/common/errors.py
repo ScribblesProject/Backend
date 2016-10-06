@@ -95,4 +95,7 @@ class InvalidCredentialsException(GeneralException):
     STATUS_CODE = 403
     TEXT = 'Invalid credentials: %s'
 
-
+class AssetDoesNotExistException(GeneralException):
+    CODE = 2004
+    STATUS_CODE = 400
+    TEXT = 'Asset does not exist: %s'

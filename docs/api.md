@@ -8,6 +8,8 @@ Base Url: tams-142602.appspot.com/
 
 For most up to date definitions, view comments in the source: https://github.com/ScribblesProject/Backend/blob/master/api/views/assets.py
 
+BASE: http://tams-142602.appspot.com
+
 ## List
 
 - Endpoint:       /api/asset/list/

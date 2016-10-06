@@ -13,7 +13,7 @@ urlpatterns = [
 	# Asset Management
 	url(r'^asset/list/$', AssetList.as_view(), name="asset-list"),
 	url(r'^asset/(?P<asset_id>[0-9A-Fa-f]*)/$', AssetFetch.as_view(), name="asset-list"),
-	url(r'^asset/update/(?P<asset_id>[0-9A-Fa-f]*)/$', AssetFetch.as_view(), name="asset-update"),
+	url(r'^asset/update/(?P<asset_id>[0-9A-Fa-f]*)/$', AssetUpdate.as_view(), name="asset-update"),
 	url(r'^asset/delete/(?P<asset_id>[0-9A-Fa-f]*)/$', AssetDelete.as_view(), name="asset-delete"),
 	url(r'^asset/create/$', AssetCreate.as_view(), name="asset-create"),
 
@@ -29,4 +29,4 @@ urlpatterns = [
 	# Asset Media Management
 	url(r'^asset/media/image-upload/(?P<asset_id>[0-9A-Fa-f]*)/$', ImageUpload.as_view(), name="media-image-upload"),
 	url(r'^asset/media/voice-upload/(?P<asset_id>[0-9A-Fa-f]*)/$', VoiceUpload.as_view(), name="media-voice-upload"),
-] 
+]

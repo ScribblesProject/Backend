@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from api.models.asset import Asset, Category, MediaImage, MediaVoiceMemo, Type, Location
 from dispatcher import ViewRequestDispatcher
 from geoposition import Geoposition
-from api.common.errors import InvalidFieldException
+from api.common.errors import InvalidFieldException,AssetDoesNotExistException
 
 """
 NOTES:
@@ -53,6 +53,23 @@ def assemble_asset_info(asset_obj):
             result['media-voice-url'] = mediaMemos[0].voice_memo.url
 
     return result
+
+
+def verify_asset(jsonObject):
+    try:
+        name = jsonObject['name']
+        categ = jsonObject['category']
+        categ_description = jsonObject['category-description']
+        asset_t = jsonObject['type-name']
+        locations = jsonObject['locations']
+
+        # verify location array inputs are
+        for order in locations.keys():
+            latitude = locations[order]['latitude']
+            longitude = locations[order]['longitude']
+
+    except KeyError:
+        raise InvalidFieldException('Body not formatted correctly')
 
 
 class AssetList(ViewRequestDispatcher):
@@ -200,39 +217,43 @@ class AssetUpdate(ViewRequestDispatcher):
         }
         """
 
-        asset_obj = Asset.objects.get(id=asset_id)
-
-        data = json.loads(request.body)
         try:
-            name = data['name']
-            description = data['description']
-            categ = data['category']
-            categ_description = data['categ_description']
-            asset_t = data['asset-type']
-            locations = data['locations']
+            data = json.loads(request.body)
+        except:
+            raise InvalidFieldException('Invalid JSON object')
 
-            # verify location array inputs
-            for order in locations.keys():
-                latitude = locations[order]['latitude']
-                longitude = locations[order]['longitude']
-        except KeyError:
-            raise InvalidFieldException('Body not formatted correctly')
+        # Will throw if error occurs
+        verify_asset(data)
+
+        asset_id = data['id']
+        name = data['name']
+        categ = data['category']
+        categ_description = data['category-description']
+        asset_t = data['type-name']
+        locations = data['locations']
+
+        description = data.get('description')
+        if description == None:
+            description = ""
+
+        try:
+            asset_obj = Asset.objects.get(id=int(asset_id))
+        except:
+            raise AssetDoesNotExistException('Cannot find asset!')
 
         asset_obj.name = name
         asset_obj.description = description
+
+        current_locs = Location.objects.filter(asset=asset_obj)
+        for loc in current_locs:
+            loc.delete()
 
         # Update Positions
         for order in locations.keys():
             latitude = locations[order]['latitude']
             longitude = locations[order]['longitude']
-            try:
-                asset_location = Location.objects.get(order=int(order), asset=asset_obj)
-                asset_location.position.longitude = longitude
-                asset_location.position.latitude = latitude
-                asset_location.save()
-            except Location.DoesNotExist:
-                new_location = Location.objects.create(order=int(order), position=Geoposition(latitude, longitude), asset=asset_obj)
-                new_location.save()
+            new_location = Location.objects.create(order=int(order), position=Geoposition(latitude, longitude), asset=asset_obj)
+            new_location.save()
 
         # Update Category
         if asset_obj.category.name == categ:
@@ -303,26 +324,21 @@ class AssetCreate(ViewRequestDispatcher):
 
         try:
             data = json.loads(request.body)
-            name = data['name']
-            categ = data['category']
-            categ_description = data['category-description']
-            asset_t = data['type-name']
-            locations = data['locations']
+        except:
+            raise InvalidFieldException('Invalid JSON object')
 
-            print('FOUND LOCATION!!!!!! ', locations)
+        # Will throw if error occurs
+        verify_asset(data)
 
-            # verify location array inputs
-            for order in locations.keys():
-                latitude = locations[order]['latitude']
-                longitude = locations[order]['longitude']
-
-        except KeyError:
-            raise InvalidFieldException('Body not formatted correctly')
+        name = data['name']
+        categ = data['category']
+        categ_description = data['category-description']
+        asset_t = data['type-name']
+        locations = data['locations']
 
         description = data.get('description')
         if description == None:
             description = ""
-
 
         result = {'success': True}
 
