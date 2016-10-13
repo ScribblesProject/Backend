@@ -2,6 +2,8 @@
 
 Base Url: tams-142602.appspot.com/
 
+**SECURITY NOTICE:** There has been no security measures put in place to prevent unauthorized access. This was left out intentionally to make mobile implementation slightly easier.
+
 ---
 
 # Asset Management
