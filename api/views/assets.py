@@ -110,7 +110,7 @@ class AssetList(ViewRequestDispatcher):
         }
 
         # Get assets from database
-        objects = Asset.objects.all()
+        objects = Asset.objects.all() 
 
         # Parse assets into result
         for obj in objects:

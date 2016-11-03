@@ -19,7 +19,6 @@ urlpatterns = [
     url(r'^api/', include('api.urls', namespace="api")),
 
     url(r'^admin/', include(admin.site.urls)),
-
     url(r'^_ah/', include('djangae.urls')),
 ]
 
