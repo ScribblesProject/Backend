@@ -110,7 +110,7 @@ class AssetList(ViewRequestDispatcher):
         }
 
         # Get assets from database
-        objects = Asset.objects.all() 
+        objects = Asset.objects.all()
 
         # Parse assets into result
         for obj in objects:
@@ -198,7 +198,7 @@ class AssetUpdate(ViewRequestDispatcher):
         Request body: {
             'name':                 String
             'description':          String
-            'category-name':        String  # If category doesnt exist, it will be created
+            'category':        String  # If category doesnt exist, it will be created
             'category-description': String
             'type-name':            string  # If type doesnt exist, it will be created
             'locations': {
@@ -217,6 +217,7 @@ class AssetUpdate(ViewRequestDispatcher):
         }
         """
 
+
         try:
             data = json.loads(request.body)
         except:
@@ -225,7 +226,6 @@ class AssetUpdate(ViewRequestDispatcher):
         # Will throw if error occurs
         verify_asset(data)
 
-        asset_id = data['id']
         name = data['name']
         categ = data['category']
         categ_description = data['category-description']
@@ -340,7 +340,7 @@ class AssetCreate(ViewRequestDispatcher):
         if description == None:
             description = ""
 
-        result = {'success': True}
+        result = {'id':0, 'success': True}
 
         # AssetCategory
         try:
