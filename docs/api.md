@@ -233,7 +233,7 @@ BASE: http://tams-142602.appspot.com
 
 ```
 [
-    'content-type' : "image/jpeg"   # change this to a valid meme type
+    'content-type' : "image/jpeg"   # change this to a valid mime type
     'content-size' : 123456         # size of the data contained in request body
 ]
 ```
@@ -256,7 +256,7 @@ BASE: http://tams-142602.appspot.com
 
 ```
 [
-    'content-type' : "audio/aac"    # change this to a valid meme type
+    'content-type' : "audio/aac"    # change this to a valid mime type
     'content-size' : 123456         # size of the data contained in request body
 ]
 ```
