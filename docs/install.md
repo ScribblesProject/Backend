@@ -1,8 +1,13 @@
 # Installation
 
-1. Download & install the appenginelauncher from [Google App Engine SDK for PHP](https://cloud.google.com/appengine/downloads). (the launcher handles python too)
-2. Open the GoogleAppEngineLauncher and click File > Open Existing Application.
-3. Navigate to the project directory and choose
+1. Visit the following: [Google App Engine SDK](https://cloud.google.com/appengine/downloads)
+2. Click Python
+3. Click "Optionally, you can also download the original App Engine SDK for Python."
+4. Then click the download button.
+5. If you are on a Mac, you should get a nice GUI to manage the project
+6. If you are not on a Mac, you may need to use the command line interface in order to do perform the same functions.
+
+Because the primary development platform has been a Mac, the rest of the intallation instructions assumes the developer is using a Mac.
 
 The launcher should look something like this:
 
